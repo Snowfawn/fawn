@@ -1,7 +1,10 @@
 #!/bin/bash
 
-echo "1을 눌러 설치를 진행하세요. q를 눌러 종료하세요."
-read -n 1 choice
+# -t 1을 추가하여 터미널이 있는지 확인
+if [ -t 1 ]; then
+    echo "1을 눌러 설치를 진행하세요. q를 눌러 종료하세요."
+    read -n 1 choice
+fi
 
 if [ "$choice" == "1" ]; then
     # 필요한 디렉토리 생성
