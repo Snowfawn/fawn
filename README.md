@@ -1,5 +1,5 @@
 # initialize
 
 ```
-curl https://snowfawn.github.io/fawn/ | bash
+curl -s https://snowfawn.github.io/fawn/ | bash
 ```
