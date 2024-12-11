@@ -1,14 +1,13 @@
 #!/bin/bash
 
 # 폰트색 설정
-BG_WHITE-FT_PURPLE="\e[107m\e[35m"
-BG_WHITE-FT_GREEN="\e[107m\e[32m"
+BG_WHITE__FT_GREEN="\e[107m\e[32m"
 DEFAULT_COLOR="\e[0m"
 
 # zsh 쉘 검사
 if [[ "$SHELL" != *"zsh"* ]]; then
-    echo -e "$BG_WHITE-FT_PURPLE Error: zsh 쉘에서만 실행 가능합니다.$DEFAULT_COLOR"
-    echo -e "$BG_WHITE-FT_PURPLE 현재 쉘: $SHELL$DEFAULT_COLOR"
+    echo -e "${BG_WHITE__FT_GREEN} Error: zsh 쉘에서만 실행 가능합니다.${DEFAULT_COLOR}"
+    echo -e "${BG_WHITE__FT_GREEN} 현재 쉘: $SHELL${DEFAULT_COLOR}"
     exit 1
 fi
 
@@ -20,7 +19,7 @@ mkdir -p "$HOME/.snowfawn"
 if [ ! -d "$FAWN_DIR" ]; then
     git clone https://github.com/Snowfawn/fawn.git "$FAWN_DIR"
 else
-    echo -e "$BG_WHITE-FT_GREEN 이미 fawn이 설치되어 있습니다.$DEFAULT_COLOR"
+    echo -e "${BG_WHITE__FT_GREEN} 이미 fawn이 설치되어 있습니다.${DEFAULT_COLOR}"
     exit 1
 fi
 
@@ -30,4 +29,4 @@ sudo ln -s "$FAWN_DIR/fawn.sh" /usr/local/bin/fawn
 # 실행 권한 부여
 chmod +x "$FAWN_DIR/fawn.sh"
 
-echo -e "$BG_WHITE-FT_GREEN 설정이 완료되었습니다. 이제 'fawn' 명령어로 스크립트를 실행할 수 있습니다.$DEFAULT_COLOR"
+echo -e "${BG_WHITE__FT_GREEN} 설정이 완료되었습니다. 이제 'fawn' 명령어로 스크립트를 실행할 수 있습니다.${DEFAULT_COLOR}"
