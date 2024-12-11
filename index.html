@@ -4,11 +4,36 @@
 BG_WHITE__FT_GREEN="\e[107m\e[32m"
 DEFAULT_COLOR="\e[0m"
 
+CHECK_INSTALL_ZSH=$1
+
 # zsh 쉘 검사
 if [[ "$SHELL" != *"zsh"* ]]; then
-    echo -e "${BG_WHITE__FT_GREEN} Error: zsh 쉘에서만 실행 가능합니다.${DEFAULT_COLOR}"
-    echo -e "${BG_WHITE__FT_GREEN} 현재 쉘: $SHELL${DEFAULT_COLOR}"
-    exit 1
+    if [[ -z "$MSYSTEM" && "$SHELL" == *"bash"* && "$CHECK_INSTALL_ZSH" == "zsh" ]]; then
+        echo -e "${BG_WHITE__FT_GREEN} bash 쉘이 감지되었습니다. Homebrew와 zsh 설치를 진행합니다...${DEFAULT_COLOR}"
+        
+        # Homebrew 설치 확인
+        if ! command -v brew &> /dev/null; then
+            echo -e "${BG_WHITE__FT_GREEN} Homebrew 설치 중...${DEFAULT_COLOR}"
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        else
+            echo -e "${BG_WHITE__FT_GREEN} Homebrew가 이미 설치되어 있습니다.${DEFAULT_COLOR}"
+        fi
+
+        # zsh 설치
+        echo -e "${BG_WHITE__FT_GREEN} zsh 설치 중...${DEFAULT_COLOR}"
+        brew install zsh
+
+        # 기본 쉘을 zsh로 변경
+        echo -e "${BG_WHITE__FT_GREEN} 기본 쉘을 zsh로 변경합니다...${DEFAULT_COLOR}"
+        chsh -s $(which zsh)
+        
+        echo -e "${BG_WHITE__FT_GREEN} zsh 설치가 완료되었습니다. 터미널을 다시 시작한 후 스크립트를 다시 실행해주세요.${DEFAULT_COLOR}"
+        exit 0
+    else
+        echo -e "${BG_WHITE__FT_GREEN} Error: zsh 쉘에서만 실행 가능합니다.${DEFAULT_COLOR}"
+        echo -e "${BG_WHITE__FT_GREEN} 현재 쉘: $SHELL${DEFAULT_COLOR}"
+        exit 1
+    fi
 fi
 
 # 필요한 디렉토리 생성
